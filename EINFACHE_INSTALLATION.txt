@@ -1,0 +1,67 @@
+═══════════════════════════════════════════════════════════════
+  EINFACHE INSTALLATION - OHNE GITHUB
+  WordPress bleibt unverändert!
+═══════════════════════════════════════════════════════════════
+
+SCHRITT 1: Projektdateien auf Server kopieren
+───────────────────────────────────────────────
+
+Auf Ihrem lokalen Rechner (Mac):
+
+  scp /Users/dilanmolor/but-lernfoerderung.tar.gz root@87.106.75.122:/tmp/
+
+Falls SCP nicht funktioniert, verwenden Sie FileZilla oder SFTP:
+  - Host: 87.106.75.122
+  - User: root
+  - Passwort: 2hq9Oi33
+  - Datei hochladen: but-lernfoerderung.tar.gz → /tmp/
+
+
+SCHRITT 2: Auf Server verbinden
+────────────────────────────────
+
+  ssh root@87.106.75.122
+  Passwort: 2hq9Oi33
+
+
+SCHRITT 3: Projekt entpacken
+─────────────────────────────
+
+  mkdir -p /var/www/but-lernfoerderung
+  cd /var/www/but-lernfoerderung
+  tar -xzf /tmp/but-lernfoerderung.tar.gz
+
+
+SCHRITT 4: Installation starten
+───────────────────────────────
+
+  chmod +x install-direct.sh
+  ./install-direct.sh
+
+Das Skript macht alles automatisch:
+  ✓ Backup der Apache-Konfiguration
+  ✓ Installation von Node.js und PM2
+  ✓ Installation der Dependencies
+  ✓ Build des Projekts
+  ✓ Start mit PM2
+  ✓ Apache-Konfiguration für Next.js
+  ✓ WordPress bleibt unverändert!
+
+
+SCHRITT 5: Prüfen
+──────────────────
+
+  pm2 status
+  curl http://localhost:3000
+
+
+═══════════════════════════════════════════════════════════════
+  FERTIG!
+═══════════════════════════════════════════════════════════════
+
+✓ Next.js läuft auf: http://localhost:3000
+✓ Apache leitet weiter: but-lernfoerderung.de → Next.js
+✓ WordPress bleibt unverändert: minilernkreis.de
+
+GitHub ist NICHT mehr nötig für den Betrieb!
+
