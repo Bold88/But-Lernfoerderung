@@ -1,38 +1,43 @@
 #!/bin/bash
 
-# Next.js Installation auf VPS neben WordPress
-# Für Ubuntu 24.04 mit Apache
+# Einfaches Installations-Skript - Direkt auf Server ausführen
+# WordPress bleibt unverändert!
 
 set -e
 
-echo "=========================================="
-echo "Next.js Installation auf VPS"
-echo "=========================================="
-echo ""
-
-# Farben für Output
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 RED='\033[0;31m'
-NC='\033[0m' # No Color
+BLUE='\033[0;34m'
+NC='\033[0m'
 
-# Prüfe ob als root ausgeführt
-if [ "$EUID" -ne 0 ]; then 
-    echo -e "${RED}❌ Bitte als root ausführen: sudo $0${NC}"
-    exit 1
-fi
+echo -e "${BLUE}=========================================="
+echo "Next.js Installation - SICHER neben WordPress"
+echo "==========================================${NC}"
+echo ""
 
-echo -e "${YELLOW}1. Node.js installieren...${NC}"
+# Backup erstellen
+echo -e "${YELLOW}[1/12] Sichere Apache-Konfiguration...${NC}"
+BACKUP_DIR="/root/apache-backup-$(date +%Y%m%d-%H%M%S)"
+mkdir -p "$BACKUP_DIR"
+cp -r /etc/apache2/sites-enabled/* "$BACKUP_DIR/" 2>/dev/null || true
+cp -r /etc/apache2/sites-available/* "$BACKUP_DIR/" 2>/dev/null || true
+echo -e "${GREEN}✓ Backup: $BACKUP_DIR${NC}"
+
+# Node.js installieren
+echo ""
+echo -e "${YELLOW}[2/12] Installiere Node.js...${NC}"
 if ! command -v node &> /dev/null; then
     curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
     apt-get install -y nodejs
-    echo -e "${GREEN}✓ Node.js installiert: $(node --version)${NC}"
+    echo -e "${GREEN}✓ Node.js: $(node --version)${NC}"
 else
     echo -e "${GREEN}✓ Node.js bereits installiert: $(node --version)${NC}"
 fi
 
+# PM2 installieren
 echo ""
-echo -e "${YELLOW}2. PM2 installieren...${NC}"
+echo -e "${YELLOW}[3/12] Installiere PM2...${NC}"
 if ! command -v pm2 &> /dev/null; then
     npm install -g pm2
     echo -e "${GREEN}✓ PM2 installiert${NC}"
@@ -40,54 +45,61 @@ else
     echo -e "${GREEN}✓ PM2 bereits installiert${NC}"
 fi
 
+# Projektverzeichnis
 echo ""
-echo -e "${YELLOW}3. Projektverzeichnis erstellen...${NC}"
+echo -e "${YELLOW}[4/12] Erstelle Projektverzeichnis...${NC}"
 mkdir -p /var/www/but-lernfoerderung
 cd /var/www/but-lernfoerderung
 
 if [ -d ".git" ]; then
-    echo -e "${GREEN}✓ Projekt bereits vorhanden, aktualisiere...${NC}"
+    echo -e "${GREEN}✓ Projekt vorhanden, aktualisiere...${NC}"
     git pull
 else
-    echo -e "${YELLOW}   Klone Projekt von GitHub...${NC}"
+    echo -e "${YELLOW}   Klone von GitHub...${NC}"
     git clone https://github.com/Bold88/But-Lernfoerderung.git .
 fi
 
+# Dependencies
 echo ""
-echo -e "${YELLOW}4. Dependencies installieren...${NC}"
+echo -e "${YELLOW}[5/12] Installiere Dependencies...${NC}"
 npm install
 
+# Build
 echo ""
-echo -e "${YELLOW}5. Build erstellen...${NC}"
+echo -e "${YELLOW}[6/12] Erstelle Build...${NC}"
 npm run build
 
+# Datenverzeichnis
 echo ""
-echo -e "${YELLOW}6. Datenverzeichnis erstellen...${NC}"
+echo -e "${YELLOW}[7/12] Erstelle Datenverzeichnis...${NC}"
 mkdir -p data
 chmod 755 data
 
+# PM2 starten
 echo ""
-echo -e "${YELLOW}7. PM2 starten...${NC}"
+echo -e "${YELLOW}[8/12] Starte PM2...${NC}"
+cd /var/www/but-lernfoerderung
 if pm2 list | grep -q "but-lernfoerderung"; then
-    echo -e "${GREEN}✓ PM2 Prozess bereits vorhanden, starte neu...${NC}"
     pm2 restart but-lernfoerderung
 else
     pm2 start npm --name "but-lernfoerderung" -- start
     pm2 save
-    pm2 startup
-    echo -e "${GREEN}✓ PM2 gestartet${NC}"
+    pm2 startup systemd -u root --hp /root
 fi
+echo -e "${GREEN}✓ PM2 gestartet${NC}"
 
+# Apache-Module
 echo ""
-echo -e "${YELLOW}8. Apache-Module aktivieren...${NC}"
-a2enmod proxy
-a2enmod proxy_http
-a2enmod rewrite
-a2enmod headers
-echo -e "${GREEN}✓ Apache-Module aktiviert${NC}"
+echo -e "${YELLOW}[9/12] Aktiviere Apache-Module...${NC}"
+a2enmod proxy 2>/dev/null || true
+a2enmod proxy_http 2>/dev/null || true
+a2enmod rewrite 2>/dev/null || true
+a2enmod headers 2>/dev/null || true
+echo -e "${GREEN}✓ Module aktiviert${NC}"
 
+# Virtual Host erstellen
 echo ""
-echo -e "${YELLOW}9. Apache Virtual Host erstellen...${NC}"
+echo -e "${YELLOW}[10/12] Erstelle Apache Virtual Host...${NC}"
 cat > /etc/apache2/sites-available/but-lernfoerderung.conf << 'EOF'
 <VirtualHost *:80>
     ServerName but-lernfoerderung.de
@@ -104,39 +116,44 @@ cat > /etc/apache2/sites-available/but-lernfoerderung.conf << 'EOF'
     RewriteCond %{HTTP:Connection} upgrade [NC]
     RewriteRule ^/?(.*) "ws://localhost:3000/$1" [P,L]
     
+    RequestHeader set X-Forwarded-Proto "http"
+    RequestHeader set X-Forwarded-Port "80"
+    
     ErrorLog ${APACHE_LOG_DIR}/but-lernfoerderung_error.log
     CustomLog ${APACHE_LOG_DIR}/but-lernfoerderung_access.log combined
+    
+    ProxyTimeout 300
 </VirtualHost>
 EOF
-
 echo -e "${GREEN}✓ Virtual Host erstellt${NC}"
 
+# Site aktivieren
 echo ""
-echo -e "${YELLOW}10. Apache Site aktivieren...${NC}"
+echo -e "${YELLOW}[11/12] Aktiviere Site...${NC}"
 a2ensite but-lernfoerderung.conf
+echo -e "${GREEN}✓ Site aktiviert${NC}"
 
+# Apache testen
 echo ""
-echo -e "${YELLOW}11. Apache-Konfiguration testen...${NC}"
+echo -e "${YELLOW}[12/12] Teste Apache...${NC}"
 if apache2ctl configtest; then
-    echo -e "${GREEN}✓ Konfiguration OK${NC}"
     systemctl reload apache2
     echo -e "${GREEN}✓ Apache neu geladen${NC}"
 else
-    echo -e "${RED}❌ Apache-Konfiguration hat Fehler!${NC}"
+    echo -e "${RED}❌ Fehler in Apache-Konfiguration!${NC}"
     exit 1
 fi
 
 echo ""
-echo -e "${GREEN}=========================================="
+echo -e "${BLUE}=========================================="
 echo "✅ Installation abgeschlossen!"
 echo "==========================================${NC}"
 echo ""
-echo "Next.js läuft auf: http://localhost:3000"
-echo "Apache leitet weiter zu: but-lernfoerderung.de"
+echo -e "${GREEN}Next.js: http://localhost:3000${NC}"
+echo -e "${GREEN}Apache: but-lernfoerderung.de → Next.js${NC}"
+echo -e "${GREEN}WordPress: minilernkreis.de (unverändert)${NC}"
 echo ""
-echo "Nächste Schritte:"
-echo "1. DNS für but-lernfoerderung.de auf 87.106.75.122 zeigen lassen"
-echo "2. SSL-Zertifikat installieren: sudo certbot --apache -d but-lernfoerderung.de"
-echo "3. Website testen"
+echo -e "${YELLOW}Status prüfen:${NC}"
+echo "  pm2 status"
+echo "  pm2 logs but-lernfoerderung"
 echo ""
-
