@@ -62,6 +62,9 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
 }
 
 body {
@@ -71,6 +74,10 @@ body {
   background-color: var(--bg-light);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
+  position: relative;
 }
 
 a {
@@ -91,6 +98,17 @@ section[class*="warm"] {
   transform: translateY(40px);
   transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
               transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.main-warm {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
+  position: relative;
 }
 
 /* ============================================
@@ -175,6 +193,9 @@ nav a:hover::after {
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 3rem;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 /* Fallback für alte Container-Klasse */
@@ -246,6 +267,10 @@ nav a:hover::after {
   background: linear-gradient(135deg, var(--bg-blue-light) 0%, var(--bg-purple-light) 50%, var(--bg-green-light) 100%);
   position: relative;
   overflow: hidden;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .hero-warm::before {
@@ -337,6 +362,9 @@ nav a:hover::after {
   width: 100%;
   position: relative;
   z-index: 2;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  padding: 0 3rem;
 }
 
 .hero-content-warm {
@@ -345,6 +373,9 @@ nav a:hover::after {
   grid-template-columns: 1.2fr 1fr;
   gap: 4rem;
   align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 .hero-text-wrapper {
@@ -426,10 +457,9 @@ nav a:hover::after {
 }
 
 .gradient-warm {
-  background: linear-gradient(135deg, var(--primary-warm) 0%, var(--secondary-warm) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--secondary-blue);
+  font-weight: 900;
+  text-shadow: 0 2px 4px rgba(74, 144, 226, 0.2);
 }
 
 .hero-subtitle-warm {
@@ -663,7 +693,7 @@ nav a:hover::after {
 
 .problem-grid-warm {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(400px, 100%), 1fr));
   gap: 3rem;
   margin-bottom: 4rem;
 }
@@ -802,7 +832,7 @@ nav a:hover::after {
 
 .info-grid-warm {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
   gap: 2rem;
   margin-bottom: 2.5rem;
 }
@@ -1150,7 +1180,7 @@ nav a:hover::after {
 
 .benefits-list-warm {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
   gap: 1rem;
 }
 
@@ -1290,7 +1320,7 @@ nav a:hover::after {
 
 .benefits-grid-warm {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
   gap: 2rem;
   margin-bottom: 3rem;
 }
@@ -1678,7 +1708,7 @@ nav a:hover::after {
 /* Testimonials - Old Styles (fallback) */
 .testimonials-warm {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(350px, 100%), 1fr));
   gap: 2.5rem;
   margin-bottom: 4rem;
 }
@@ -2433,7 +2463,7 @@ nav a:hover::after {
 /* Spektakuläre Answer Buttons */
 .but-answer-options-spectacular {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
   gap: 1.5rem;
   margin-bottom: 3rem;
 }
@@ -2648,7 +2678,7 @@ footer {
   max-width: 1400px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
   gap: 3rem;
 }
 
@@ -2807,6 +2837,14 @@ footer {
 @media (max-width: 1024px) {
   .container-warm {
     padding: 0 2rem;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .hero-container-warm {
+    padding: 0 2rem;
+    overflow-x: hidden;
   }
 
   .hero-warm,
@@ -2943,6 +2981,14 @@ footer {
 
   .container-warm {
     padding: 0 1.5rem;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .hero-container-warm {
+    padding: 0 1.5rem;
+    overflow-x: hidden;
   }
 
   .problem-section-warm,
@@ -3069,6 +3115,18 @@ footer {
 
   .container-warm {
     padding: 0 1rem;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .hero-container-warm {
+    padding: 0 1rem;
+    overflow-x: hidden;
+  }
+  
+  .hero-warm {
+    padding: 3rem 1rem !important;
   }
 
   .hero-warm,
