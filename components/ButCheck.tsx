@@ -65,14 +65,22 @@ export default function ButCheck({ onComplete }: ButCheckProps) {
     const newAnswers = { ...answers, [questionId]: answer }
     setAnswers(newAnswers)
 
-    setTimeout(() => {
-      if (currentQuestion < questions.length - 1) {
-        setCurrentQuestion(currentQuestion + 1)
-        setIsAnimating(false)
-      } else {
+    // Wenn "Ja" beantwortet wurde, direkt zum Formular
+    if (answer === true) {
+      setTimeout(() => {
         onComplete(newAnswers)
-      }
-    }, 500)
+      }, 500)
+    } else {
+      // Bei "Nein" zur nächsten Frage oder abschließen
+      setTimeout(() => {
+        if (currentQuestion < questions.length - 1) {
+          setCurrentQuestion(currentQuestion + 1)
+          setIsAnimating(false)
+        } else {
+          onComplete(newAnswers)
+        }
+      }, 500)
+    }
   }
 
   const handlePrev = () => {

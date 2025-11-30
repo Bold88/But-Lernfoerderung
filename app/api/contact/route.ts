@@ -39,9 +39,26 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     
     // Validate required fields
-    if (!body.first_name || !body.last_name || !body.email || !body.city) {
+    if (!body.first_name || !body.last_name || !body.email || !body.zip || !body.phone || !body.grade || !body.consent) {
       return NextResponse.json(
-        { error: 'Pflichtfelder fehlen' },
+        { error: 'Bitte füllen Sie alle Pflichtfelder aus' },
+        { status: 400 }
+      )
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(body.email)) {
+      return NextResponse.json(
+        { error: 'Bitte geben Sie eine gültige E-Mail-Adresse ein' },
+        { status: 400 }
+      )
+    }
+
+    // Validate ZIP code (5 digits)
+    if (!/^\d{5}$/.test(body.zip)) {
+      return NextResponse.json(
+        { error: 'Bitte geben Sie eine gültige 5-stellige Postleitzahl ein' },
         { status: 400 }
       )
     }

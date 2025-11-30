@@ -63,7 +63,7 @@ export default function HomePage() {
           <div className="hero-container-warm">
             <div className="hero-content-warm">
               <div className="hero-text-wrapper">
-              <div className="hero-badge-warm">✨ Kostenlose Lernförderung für Ihr Kind</div>
+              <div className="hero-badge-warm">Kostenlose Lernförderung für Ihr Kind</div>
               <h1 className="hero-title-warm">
                 Geben Sie Ihrem Kind die Chance, 
                 <br />
@@ -78,22 +78,22 @@ export default function HomePage() {
               {/* Social Proof */}
               <div className="social-proof-warm">
                 <div className="proof-item">
-                  <span className="proof-number">2.847</span>
-                  <span className="proof-label">Eltern haben bereits geprüft</span>
+                  <span className="proof-number">Kostenlos</span>
+                  <span className="proof-label">Vollständig unverbindlich</span>
                 </div>
                 <div className="proof-item">
-                  <span className="proof-number">94%</span>
-                  <span className="proof-label">erhalten eine Rückmeldung</span>
+                  <span className="proof-number">Schnell</span>
+                  <span className="proof-label">Prüfung in 60 Sekunden</span>
                 </div>
                 <div className="proof-item">
-                  <span className="proof-number">100%</span>
-                  <span className="proof-label">kostenlos & unverbindlich</span>
+                  <span className="proof-number">Einfach</span>
+                  <span className="proof-label">Keine komplizierten Formulare</span>
                 </div>
               </div>
 
               <div className="hero-cta-group-warm">
                 <a href="#but-check" className="btn-primary-warm">
-                  🎯 Jetzt kostenlos prüfen – nur 60 Sekunden
+                  Jetzt kostenlos prüfen – nur 60 Sekunden
                 </a>
                 <a href="#info" className="btn-secondary-warm">
                   Mehr über die Förderung erfahren
@@ -102,16 +102,13 @@ export default function HomePage() {
 
               <div className="hero-trust-warm">
                 <div className="trust-badge-warm">
-                  <span className="trust-icon-warm">🔒</span>
-                  <span>DSGVO-konform & sicher</span>
+                  <span className="trust-icon-warm">DSGVO-konform & sicher</span>
                 </div>
                 <div className="trust-badge-warm">
-                  <span className="trust-icon-warm">⚡</span>
-                  <span>Sofortige Prüfung möglich</span>
+                  <span className="trust-icon-warm">Sofortige Prüfung möglich</span>
                 </div>
                 <div className="trust-badge-warm">
-                  <span className="trust-icon-warm">💯</span>
-                  <span>100% kostenlos für Sie</span>
+                  <span className="trust-icon-warm">100% kostenlos für Sie</span>
                 </div>
               </div>
               </div>
@@ -176,7 +173,7 @@ export default function HomePage() {
                   Prüfen Sie jetzt kostenlos, ob Sie Anspruch haben.
                 </p>
                 <a href="#but-check" className="btn-primary-warm">
-                  🎯 Jetzt kostenlos prüfen
+                  Jetzt kostenlos prüfen
                 </a>
               </div>
             </div>
@@ -265,8 +262,7 @@ export default function HomePage() {
             </div>
 
             {/* Urgency Element */}
-            <div className="urgency-box-warm">
-              <div className="urgency-icon">⏰</div>
+              <div className="urgency-box-warm">
               <div className="urgency-content">
                 <h3>Warten Sie nicht zu lange</h3>
                 <p>
@@ -310,7 +306,6 @@ export default function HomePage() {
               ) : (
                 <div className="check-result-warm">
                   <div className="result-success-warm">
-                    <div className="success-icon-large-warm">🎉</div>
                     <h3>Herzlichen Glückwunsch!</h3>
                     <p className="result-main-text">
                       Basierend auf Ihren Antworten <strong>könnten Sie Anspruch auf kostenlose Nachhilfe haben.</strong>
@@ -391,16 +386,16 @@ export default function HomePage() {
                 </p>
                 <div className="why-us-stats">
                   <div className="why-us-stat">
-                    <div className="stat-number-large">2.847+</div>
-                    <div className="stat-label-large">Zufriedene Familien</div>
+                    <div className="stat-number-large">Schnell</div>
+                    <div className="stat-label-large">Vermittlung innerhalb weniger Tage</div>
                   </div>
                   <div className="why-us-stat">
-                    <div className="stat-number-large">94%</div>
-                    <div className="stat-label-large">Erfolgsquote</div>
+                    <div className="stat-number-large">Einfach</div>
+                    <div className="stat-label-large">Komplette Organisation für Sie</div>
                   </div>
                   <div className="why-us-stat">
-                    <div className="stat-number-large">24-48h</div>
-                    <div className="stat-label-large">Schnelle Vermittlung</div>
+                    <div className="stat-number-large">Kostenlos</div>
+                    <div className="stat-label-large">Keine versteckten Kosten</div>
                   </div>
                 </div>
               </div>
@@ -455,8 +450,7 @@ export default function HomePage() {
             {/* Testimonials - Spektakulär & Interessant */}
             <div className="testimonials-spectacular">
               <div className="testimonial-featured">
-                <div className="testimonial-avatar">👩‍👧</div>
-                <div className="testimonial-rating-large">⭐⭐⭐⭐⭐</div>
+                <div className="testimonial-rating-large">★★★★★</div>
                 <div className="testimonial-quote-icon">"</div>
                 <blockquote className="testimonial-text-large">
                   <strong>Dank der Bildungs- und Teilhabe-Förderung konnte unsere Tochter endlich gezielt 
@@ -474,8 +468,7 @@ export default function HomePage() {
               <div className="testimonials-grid-compact">
                 <div className="testimonial-compact">
                   <div className="testimonial-header-compact">
-                    <div className="testimonial-avatar-small">👦</div>
-                    <div className="testimonial-rating-compact">⭐⭐⭐⭐⭐</div>
+                    <div className="testimonial-rating-compact">★★★★★</div>
                   </div>
                   <blockquote>
                     <strong>Mit der Unterstützung durch BuT habe ich Nachhilfe in Deutsch bekommen.</strong> 
@@ -490,8 +483,7 @@ export default function HomePage() {
 
                 <div className="testimonial-compact">
                   <div className="testimonial-header-compact">
-                    <div className="testimonial-avatar-small">👨‍👩‍👧‍👦</div>
-                    <div className="testimonial-rating-compact">⭐⭐⭐⭐⭐</div>
+                    <div className="testimonial-rating-compact">★★★★★</div>
                   </div>
                   <blockquote>
                     <strong>Die Lernförderung über BuT hat uns sehr entlastet.</strong> Es war unkompliziert, 
@@ -511,7 +503,7 @@ export default function HomePage() {
               <h3>Lassen Sie auch Ihr Kind von dieser Förderung profitieren</h3>
               <p>Prüfen Sie jetzt kostenlos, ob Sie Anspruch haben – es dauert nur 60 Sekunden.</p>
               <a href="#but-check" className="btn-primary-warm">
-                🎯 Jetzt kostenlos prüfen
+                Jetzt kostenlos prüfen
               </a>
             </div>
           </div>
@@ -543,7 +535,7 @@ export default function HomePage() {
                 {showForm ? (
                   <div>
                     <div className="form-intro-warm">
-                      <h3>🎉 Fast geschafft!</h3>
+                      <h3>Fast geschafft!</h3>
                       <p>
                         Füllen Sie jetzt das Formular aus, und wir vermitteln Sie an ein geprüftes 
                         Institut in Ihrer Nähe. <strong>Meist erhalten Sie innerhalb von 24–48 Stunden eine Rückmeldung.</strong>
@@ -553,14 +545,13 @@ export default function HomePage() {
                   </div>
                 ) : (
                   <div className="lead-prompt-warm">
-                    <div className="prompt-icon">📝</div>
                     <h3>Bereit für den nächsten Schritt?</h3>
                     <p>
                       Bitte führen Sie zuerst den BuT-Check durch, um das Kontaktformular zu sehen. 
                       <strong> Es dauert nur 60 Sekunden und ist vollständig kostenlos.</strong>
                     </p>
                     <a href="#but-check" className="btn-primary-warm">
-                      🎯 Zum BuT-Check
+                      Zum BuT-Check
                     </a>
                   </div>
                 )}
@@ -574,7 +565,7 @@ export default function HomePage() {
                   desto schneller kann es aufholen. Starten Sie jetzt – es kostet Sie nichts.
                 </p>
                 <a href="#but-check" className="btn-primary-warm">
-                  🎯 Jetzt kostenlos prüfen
+                  Jetzt kostenlos prüfen
                 </a>
               </div>
             </div>
@@ -660,7 +651,7 @@ export default function HomePage() {
               <h3>Bereit, Ihrem Kind zu helfen?</h3>
               <p>Prüfen Sie jetzt kostenlos, ob Sie Anspruch haben – es dauert nur 60 Sekunden.</p>
               <a href="#but-check" className="btn-primary-warm">
-                🎯 Jetzt kostenlos prüfen
+                Jetzt kostenlos prüfen
               </a>
             </div>
           </div>
